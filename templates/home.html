@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/jpg" href="../static/blue.jpg"/>
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='style.css')}}"/>
+</head>
+
+
+<body>
+    <div class="container">
+        <form action="{{ url_for('home') }}" method="POST" id="form1">
+            <label for="textbox1">First Name</label>
+            <input type="text" id="textbox1" name="fname">
+            <label for="textbox2">Last Name</label>
+            <input type="text" id="textbox2" name="lname">
+            <label for="textbox3">Email</label>
+            <input type="text" id="textbox3" name="email">
+            <label for="textbox4">Password</label>
+            <input type="text" id="textbox4" name="pass">
+            <label for="textbox5">Confirm Password</label>
+            <input type="text" id="textbox5" name="cpass">
+        </form>
+    </div>
+</body>
+</html>
