@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask_wtf import Form
 from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, Email, EqualTo, length
+import email_validator
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Cant_say'
@@ -25,7 +26,7 @@ def home():
         cpass = form.cpass.data
         print(fname, lname, email, pass1, cpass)
         return redirect('/')
-    return render_template("home.html")
+    return render_template("home.html", form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)
