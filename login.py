@@ -23,7 +23,7 @@ db = client.get_database('CouponShare')
 user_collection = pymongo.collection.Collection(db, 'Users')
 
 @app.route('/', methods=['POST', 'GET'])
-def home():
+def signup():
     form = inputForm()
     if request.method=="POST":
         fname = form.fname.data
