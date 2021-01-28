@@ -17,7 +17,7 @@ class inputForm(Form):
     pass1 = PasswordField('pass1', validators=[DataRequired()])
     sub = SubmitField('Sign Up')
 
-CONNECTION_STRING = "mongodb+srv://VIT_Admin:pizza@vitdiaries.tpuku.mongodb.net/CouponShare?retryWrites=true&w=majority"
+CONNECTION_STRING = "mongodb+srv://VIT_Admin:<password>@vitdiaries.tpuku.mongodb.net/CouponShare?retryWrites=true&w=majority"
 client = pymongo.MongoClient(CONNECTION_STRING)
 db = client.get_database('CouponShare')
 user_collection = pymongo.collection.Collection(db, 'Users')
