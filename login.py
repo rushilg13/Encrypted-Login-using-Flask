@@ -38,7 +38,7 @@ def signup():
             # decrypttext = cryptocode.decrypt(ciphertext, "mysecretkey")
             user_collection.insert_one({'First Name': fname, 'Last Name': lname, 'Email': email, 'Password': ciphertext})
         return "Logged in"
-    return render_template("home.html", form=form)
+    return render_template("signup.html", form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)
