@@ -17,6 +17,11 @@ class inputForm(Form):
     pass1 = PasswordField('pass1', validators=[DataRequired()])
     sub = SubmitField('Sign Up')
 
+class inputFormlogin(Form):
+    email = EmailField('email', validators=[DataRequired(), Email()])
+    pass1 = PasswordField('pass1', validators=[DataRequired()])
+    sub = SubmitField('Login')
+
 CONNECTION_STRING = "mongodb+srv://VIT_Admin:<password>@vitdiaries.tpuku.mongodb.net/CouponShare?retryWrites=true&w=majority"
 client = pymongo.MongoClient(CONNECTION_STRING)
 db = client.get_database('CouponShare')
@@ -39,6 +44,22 @@ def signup():
             user_collection.insert_one({'First Name': fname, 'Last Name': lname, 'Email': email, 'Password': ciphertext})
         return "Logged in"
     return render_template("signup.html", form=form)
+
+@app.route('/login', method=['POST', 'GET'])
+def login():
+    form_login = inputFormlogin()
+    if request.method=="POST":
+        email = form_login.email.data
+        pass1 = form_login.pass1.data
+    if form_login.validate_on_submit():
+        return("Submitted")
+    else:
+        ciphertext = cryptocode.encrypt(pass1,"mysecretkey")
+        # decrypttext = cryptocode.decrypt(ciphertext, "mysecretkey")
+        return "Logged in"
+    return render_template("signup.html", form_login=form_login)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
