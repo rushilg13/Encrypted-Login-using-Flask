@@ -12,40 +12,12 @@
 
             <label for="textbox1">First Name</label>
             {{ form.fname }}
-            <ul>
-                {% for error in form.fname.errors %}
-                <li style="color: red;">
-                    {{ error }}
-                </li>
-                {% endfor %}
-            </ul>
             <label for="textbox2">Last Name</label>
             {{ form.lname }}
-            <ul>
-                {% for error in form.lname.errors %}
-                <li style="color: red;">
-                    {{ error }}
-                </li>
-                {% endfor %}
-            </ul>
             <label for="textbox3">Email</label>
             {{ form.email }}
-            <ul>
-                {% for error in form.email.errors %}
-                <li style="color: red;">
-                    {{ error }}
-                </li>
-                {% endfor %}
-            </ul>
             <label for="textbox4">Password</label>
             {{ form.pass1 }}
-            <ul>
-                {% for error in form.pass1.errors %}
-                <li style="color: red;">
-                    {{ error }}
-                </li>
-                {% endfor %}
-            </ul>
             
             {{form.sub}}
         </form>
