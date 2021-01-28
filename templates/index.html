@@ -4,8 +4,14 @@
     <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='style.css')}}"/>
 </head>
 
-
 <body>
-
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/newpost">New Post</a>
+        <a href="/news">News</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/Account">Hi, {{ fname }} {{lname}}</a>
+    </div>
 </body>
 </html>

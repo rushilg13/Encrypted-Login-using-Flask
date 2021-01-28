@@ -43,7 +43,7 @@ def signup():
                 n = ((ord(s) + 237)**2)%26
                 new+=chr(n)
             user_collection.insert_one({'First Name': fname, 'Last Name': lname, 'Email': email, 'Password': new})
-        return "Logged in"
+            return render_template('index.html', fname = fname, lname = lname)
     return render_template("signup.html", form=form)
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -63,15 +63,18 @@ def login():
             # print(filter_dict)
             if user_collection.count_documents(filter_dict):
                 print("item is existed")
-                flash("item is existed")
-                return "Logged in"
+                user_details = user_collection.find_one(filter_dict)
+                # print(user_details)
+                return render_template('index.html', fname = user_details['First Name'], lname = user_details['Last Name'])
             else:
                 print("item is not existed")
                 flash('Invalid Credentials')
                 return redirect('/login')
     return render_template("login.html", form_login=form_login)
 
-
+@app.route('/home')
+def home():
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
