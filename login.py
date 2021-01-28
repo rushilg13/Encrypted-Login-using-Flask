@@ -22,7 +22,7 @@ client = pymongo.MongoClient(CONNECTION_STRING)
 db = client.get_database('CouponShare')
 user_collection = pymongo.collection.Collection(db, 'Users')
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/signup', methods=['POST', 'GET'])
 def signup():
     form = inputForm()
     if request.method=="POST":
