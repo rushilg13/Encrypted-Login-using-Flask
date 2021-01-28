@@ -5,7 +5,7 @@ from wtforms import StringField, PasswordField, validators, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 from wtforms.fields.html5 import EmailField
 from flask_pymongo import pymongo
-
+from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Cant_say'
 
@@ -38,12 +38,12 @@ def signup():
         if form.validate_on_submit():
             return("Submitted")
         else:
-            new=''
-            for s in pass1:
-                n = ((ord(s) + 237)**2)%26
-                new+=chr(n)
-            user_collection.insert_one({'First Name': fname, 'Last Name': lname, 'Email': email, 'Password': new})
-            return render_template('index.html', fname = fname, lname = lname)
+            if user_collection.count_documents({"Email": email}):
+                return "User already Exists!"
+            else:
+                cipher = generate_password_hash(pass1, method='sha256')
+                user_collection.insert_one({'First Name': fname, 'Last Name': lname, 'Email': email, 'Password': cipher})
+                return render_template('index.html', fname = fname, lname = lname)
     return render_template("signup.html", form=form)
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -55,17 +55,10 @@ def login():
         if form_login.validate_on_submit():
             return("Submitted")
         else:
-            new=''
-            for s in pass1:
-                n = ((ord(s) + 237)**2)%26
-                new+=chr(n)
-            filter_dict = {"Email": email, "Password": new}
-            # print(filter_dict)
-            if user_collection.count_documents(filter_dict):
+            user = user_collection.find_one({"Email":email})
+            if check_password_hash(user['Password'], pass1):
                 print("item is existed")
-                user_details = user_collection.find_one(filter_dict)
-                # print(user_details)
-                return render_template('index.html', fname = user_details['First Name'], lname = user_details['Last Name'])
+                return render_template('index.html', fname = user['First Name'], lname = user['Last Name'])
             else:
                 print("item is not existed")
                 flash('Invalid Credentials')

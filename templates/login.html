@@ -21,13 +21,14 @@
             {% if messages %}
               <ul class=flashes>
               {% for message in messages %}
-                <li>{{ message }}</li>
+                {{ message }}
               {% endfor %}
               </ul>
             {% endif %}
           {% endwith %}
 
         </form>
+        <p>Don't have an Account yet? <a href="/signup">Sign Up</a></p>
     </div>
 </body>
 </html>
