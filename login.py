@@ -6,6 +6,8 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length
 from wtforms.fields.html5 import EmailField
 from flask_pymongo import pymongo
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Cant_say'
 
@@ -20,6 +22,14 @@ class inputFormlogin(Form):
     email = EmailField('email', validators=[DataRequired(), Email()])
     pass1 = PasswordField('pass1', validators=[DataRequired()])
     sub = SubmitField('Login')
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 CONNECTION_STRING = "mongodb+srv://VIT_Admin:<password>@vitdiaries.tpuku.mongodb.net/CouponShare?retryWrites=true&w=majority"
 client = pymongo.MongoClient(CONNECTION_STRING)
@@ -66,6 +76,7 @@ def login():
     return render_template("login.html", form_login=form_login)
 
 @app.route('/home')
+@login_required
 def home():
     return render_template('index.html')
 
