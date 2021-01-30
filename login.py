@@ -31,7 +31,8 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.get(user_id)
 
-CONNECTION_STRING = "mongodb+srv://VIT_Admin:<password>@vitdiaries.tpuku.mongodb.net/CouponShare?retryWrites=true&w=majority"
+db_password = input("Password for database is:")
+CONNECTION_STRING = f"mongodb+srv://VIT_Admin:{db_password}@vitdiaries.tpuku.mongodb.net/CouponShare?retryWrites=true&w=majority"
 client = pymongo.MongoClient(CONNECTION_STRING)
 db = client.get_database('CouponShare')
 user_collection = pymongo.collection.Collection(db, 'Users')
